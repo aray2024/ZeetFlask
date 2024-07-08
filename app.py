@@ -43,6 +43,10 @@ def index():
 def hiw():
     return render_template('hiw.html')
 
+@app.route('/test')                    # how it works page
+def test():
+    return 'Test from Flask'
+
 @app.route('/results')                # results page
 def results():
     return render_template('results.html')
