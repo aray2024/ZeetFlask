@@ -19,7 +19,15 @@ def upload():                                # method's name should be the same 
         try:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename)) # saving file to UPLOAD_FOLDER folder
             model = YOLO('best.pt')             # setting the model
-            results2 = model([file.filename])   # giving an image to our model to recognize
+            img = Image.open(file.filename)
+            pixels = img.load()
+            x, y = img.size
+            for i in range(x):
+                for j in range(y):
+                    if (pixels[i, j][0] >= 200) & (pixels[i, j][1] >= 200) & (pixels[i, j][2] >= 200):
+                        pixels[i, j] = (0, 0, 0)
+            img.save("output.png")
+            results2 = model(["output.png"])  # giving an image to our model to recognize
             for result in results2:             # working with the recognized result
                 boxes = result.boxes  # Boxes object for bounding box outputs
                 masks = result.masks  # Masks object for segmentation masks outputs
