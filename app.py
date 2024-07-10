@@ -1,4 +1,5 @@
 # importing necessary libraries
+from PIL import Image
 import os
 from ultralytics import YOLO
 from flask import Flask, flash, url_for, request, render_template,  redirect, session, g
